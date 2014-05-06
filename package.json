@@ -4,7 +4,7 @@
   "description": "create polymorphic associations in mongoose",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers:coffee-script/register"
+    "test": "mocha --compilers coffee:coffee-script/register test"
   },
   "keywords": [
     "mongoose",
@@ -15,6 +15,11 @@
   "license": "mit",
   "dependencies": {
     "coffee-script": "~1.7.1",
-    "mongoose": "~3.8.8"
+    "mongoose": "~3.8.8",
+    "mongoose-q": "0.0.10"
+  },
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "chai": "~1.9.1"
   }
 }

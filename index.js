@@ -1,2 +1,2 @@
 require('coffee-script');
-require('./lib/mongoose-polymorphic');
+module.exports = require('./lib/mongoose-polymorphic');
