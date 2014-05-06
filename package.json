@@ -1,0 +1,20 @@
+{
+  "name": "mongoose-polymorphic",
+  "version": "0.0.0",
+  "description": "create polymorphic associations in mongoose",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers:coffee-script/register"
+  },
+  "keywords": [
+    "mongoose",
+    "associations",
+    "polymorphic"
+  ],
+  "author": "Andy",
+  "license": "mit",
+  "dependencies": {
+    "coffee-script": "~1.7.1",
+    "mongoose": "~3.8.8"
+  }
+}
