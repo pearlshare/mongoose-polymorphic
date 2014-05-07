@@ -10,12 +10,19 @@ mongoose = require("mongoose-q")()
 module.exports = (schema, options = {}) ->
 
   associationKey = options.associationKey || 'item'
+  required = options.required || false
   capitalizedAssociationKey = associationKey.charAt(0).toUpperCase() + associationKey.slice(1)
 
   # Build the schema
   schemaAdditions = {}
-  schemaAdditions["#{associationKey}Type"] = 'String'
-  schemaAdditions["#{associationKey}Id"] = mongoose.Schema.ObjectId
+  schemaAdditions["#{associationKey}Type"] = 
+    type: 'String'
+    required: required
+
+  schemaAdditions["#{associationKey}Id"] =
+    type: mongoose.Schema.ObjectId
+    required: required
+    
   schema.add schemaAdditions
 
   indexAdditions = {}
