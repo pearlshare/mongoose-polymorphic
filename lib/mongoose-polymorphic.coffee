@@ -13,29 +13,54 @@ module.exports = (schema, options = {}) ->
   required = options.required || false
   capitalizedAssociationKey = associationKey.charAt(0).toUpperCase() + associationKey.slice(1)
 
-  # Build the schema
+  idKey = "#{associationKey}Id"
+  typeKey = "#{associationKey}Type"
+
+  ###
+    Build the schema
+  ###
   schemaAdditions = {}
-  schemaAdditions["#{associationKey}Type"] = 
+  schemaAdditions[typeKey] = 
     type: 'String'
     required: required
 
-  schemaAdditions["#{associationKey}Id"] =
+  schemaAdditions[idKey] =
     type: mongoose.Schema.ObjectId
     required: required
     
   schema.add schemaAdditions
 
+  ###
+    Create a compound index for looking up the parent by the polymorphic child
+  ###
   indexAdditions = {}
-  indexAdditions["#{associationKey}Id"] = 1
-  indexAdditions["#{associationKey}Type"] = 1
+  indexAdditions[idKey] = 1
+  indexAdditions[typeKey] = 1
   schema.index indexAdditions
 
-  # Build the getter/setter methods
+  ###
+    Get and set the item using mongoose virtual attributes
+    model.item          => returns Promise to fetch related item
+    model.item = item   => sets the itemId and itemType to that of the item
+  ###
+  schema.virtual(associationKey)
+    .get ->
+      mongoose.model(@get(typeKey)).findById(@get(idKey)).execQ()
+    .set (model) ->
+      @set idKey, model.id
+      @set typeKey, model.constructor.modelName
+
+  ###
+    Build a setter method
+  ###
   schema.methods["set#{capitalizedAssociationKey}"] = (item) ->
     itemAttrs = {}
-    itemAttrs["#{associationKey}Id"] = item.id
-    itemAttrs["#{associationKey}Type"] = item.constructor.modelName
+    itemAttrs[idKey] = item.id
+    itemAttrs[typeKey] = item.constructor.modelName
     @set itemAttrs
 
+  ###
+    Build a getter method
+  ###
   schema.methods["get#{capitalizedAssociationKey}"] = (callback) ->
-    mongoose.model(@["#{associationKey}Type"]).findById(@["#{associationKey}Id"]).execQ().nodeify(callback)
+    mongoose.model(@get(typeKey)).findById(@get(idKey)).execQ().nodeify(callback)

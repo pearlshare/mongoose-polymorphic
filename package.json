@@ -1,6 +1,6 @@
 {
   "name": "mongoose-polymorphic",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "create polymorphic associations in mongoose",
   "main": "index.js",
   "scripts": {
