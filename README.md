@@ -32,7 +32,7 @@ alert = new Alert
 
 alert.setItem(item)
 
-alert.getItem (err, item) ->
+alert.fetchItem (err, item) ->
   if err
     console.log err
   else
@@ -50,7 +50,7 @@ mongoosePolymorphic = require('mongoose-polymorphic')
 AlertSchema.plugin mongoosePolymorphic, options
 ```
 
-By default this will create schema keys 'itemId' and 'itemType'. It also defines methods 'setItem' and 'getItem'.
+By default this will create schema keys 'itemId' and 'itemType'. It also defines methods 'setItem' and 'fetchItem'.
 
 Options:
 

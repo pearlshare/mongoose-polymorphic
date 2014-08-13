@@ -52,6 +52,7 @@ module.exports = (schema, options = {}) ->
 
   ###
     Build a setter method
+    model.setItem(item)
   ###
   schema.methods["set#{capitalizedAssociationKey}"] = (item) ->
     itemAttrs = {}
@@ -61,6 +62,7 @@ module.exports = (schema, options = {}) ->
 
   ###
     Build a getter method
+    model.fetchItem().then console.log
   ###
-  schema.methods["get#{capitalizedAssociationKey}"] = (callback) ->
+  schema.methods["fetch#{capitalizedAssociationKey}"] = (callback) ->
     mongoose.model(@get(typeKey)).findById(@get(idKey)).execQ().nodeify(callback)
