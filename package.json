@@ -1,6 +1,6 @@
 {
   "name": "mongoose-polymorphic",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "create polymorphic associations in mongoose",
   "main": "index.js",
   "scripts": {
@@ -14,9 +14,9 @@
   "author": "Oliver Brooks",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^2.3.6",
     "coffee-script": "~1.7.1",
-    "mongoose": "~3.8.8",
-    "mongoose-q": "0.0.10"
+    "mongoose": "~3.8.8"
   },
   "devDependencies": {
     "mocha": "~1.18.2",

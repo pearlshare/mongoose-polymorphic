@@ -1,5 +1,5 @@
-mocha = require("mocha")
-chai = require("chai")
+mocha = require('mocha')
+chai = require('chai')
 mongoose = require('mongoose')
 mongoosePolymorphic = require('../index')
 expect = chai.expect
@@ -11,14 +11,13 @@ expect = chai.expect
 
 mongoose.connect('mongodb://localhost/mongoose-polymorphic')
 mongoose.connection.on 'error', (err) ->
-  console.error "MongoDB error:", err
+  console.error 'MongoDB error:', err
   console.error 'Make sure a mongoDB server is running and accessible by this application'
 
 
 # Define our alert (child model)
 AlertSchema = new mongoose.Schema
-
-  name: "String"
+  name: 'String'
 
 # Add our shiny plugin
 AlertSchema.plugin mongoosePolymorphic
@@ -29,7 +28,7 @@ mongoose.model('Alert', AlertSchema)
 
 # Define our item (parent model)
 ItemSchema = new mongoose.Schema
-  name: "String"
+  name: 'String'
 
 mongoose.model('Item', ItemSchema)
 
@@ -40,7 +39,7 @@ item = new Item(name: 'A big item')
 ###
   Usage
 ###
-Alert = mongoose.model("Alert")
+Alert = mongoose.model('Alert')
 
 describe 'Mongoose Polymorphic', ->
 
@@ -74,7 +73,7 @@ describe 'Mongoose Polymorphic', ->
         done()
 
 
-    describe 'getItem()', ->
+    describe 'fetchItem()', ->
       before (done) ->
         item = new Item
         item.save (err) ->
@@ -83,7 +82,7 @@ describe 'Mongoose Polymorphic', ->
       it 'should get the item from the database', (done) ->
         alert = new Alert(name: 'Pig')
         alert.setItem(item)
-        alert.getItem (err, item) ->
+        alert.fetchItem (err, item) ->
           done()
 
   context 'When the plugin with option to use parent as polymorphic key is applied to the Alert model', ->
@@ -116,7 +115,7 @@ describe 'Mongoose Polymorphic', ->
         done()
 
 
-    describe 'getParent()', ->
+    describe 'fetchParent()', ->
       before (done) ->
         item = new Item
         item.save (err) ->
@@ -125,12 +124,5 @@ describe 'Mongoose Polymorphic', ->
       it 'should get the item from the database', (done) ->
         alert = new Alert(name: 'Pig')
         alert.setParent(item)
-        alert.getParent (err, item) ->
+        alert.fetchParent (err, item) ->
           done()
-
-
-
-
-
-
-

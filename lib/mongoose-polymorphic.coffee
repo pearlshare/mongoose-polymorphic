@@ -1,5 +1,7 @@
-require('coffee-script')
-mongoose = require("mongoose-q")()
+mongoose = require('mongoose')
+Promise = require('bluebird')
+
+Promise.promisifyAll(mongoose)
 
 ###
   mongoose-polymorphic
@@ -20,14 +22,14 @@ module.exports = (schema, options = {}) ->
     Build the schema
   ###
   schemaAdditions = {}
-  schemaAdditions[typeKey] = 
+  schemaAdditions[typeKey] =
     type: 'String'
     required: required
 
   schemaAdditions[idKey] =
     type: mongoose.Schema.ObjectId
     required: required
-    
+
   schema.add schemaAdditions
 
   ###
@@ -45,7 +47,7 @@ module.exports = (schema, options = {}) ->
   ###
   schema.virtual(associationKey)
     .get ->
-      mongoose.model(@get(typeKey)).findById(@get(idKey)).execQ()
+      mongoose.model(@get(typeKey)).findById(@get(idKey)).execAsync()
     .set (model) ->
       @set idKey, model.id
       @set typeKey, model.constructor.modelName
@@ -65,4 +67,4 @@ module.exports = (schema, options = {}) ->
     model.fetchItem().then console.log
   ###
   schema.methods["fetch#{capitalizedAssociationKey}"] = (callback) ->
-    mongoose.model(@get(typeKey)).findById(@get(idKey)).execQ().nodeify(callback)
+    mongoose.model(@get(typeKey)).findById(@get(idKey)).execAsync().nodeify(callback)
