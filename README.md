@@ -5,38 +5,41 @@ A mongoose plugin to create polymorphic relationships. The relationship enables 
 
 ## Setup
 
-```coffee
+```javascript
 
-mongoose = require('mongoose')
-mongoosePolymorphic = require('mongoose-polymorphic')
+    var mongoose = require('mongoose');
+    var mongoosePolymorphic = require('mongoose-polymorphic')
 
-# Create a schema
-AlertSchema = new mongoose.Schema
-  name: "String"
+    // Create a schema
+    var AlertSchema = new mongoose.Schema({
+      name: "String"
+    });
 
-# Apply the plugin
-AlertSchema.plugin mongoosePolymorphic
+    // Apply the plugin
+    AlertSchema.plugin(mongoosePolymorphic);
 
-mongoose.model 'Alert', AlertSchema
+    mongoose.model('Alert', AlertSchema);
 
 ```
 
 ## Usage
 
-```coffee
-Item = mongoose.model 'Item'
-item = new Item
+```javascript
+    var Item = mongoose.model('Item')
+    var item = new Item
 
-Alert = mongoose.model "Alert"
-alert = new Alert
+    var Alert = mongoose.model("Alert")
+    var alert = new Alert
 
-alert.setItem(item)
+    alert.setItem(item);
 
-alert.fetchItem (err, item) ->
-  if err
-    console.log err
-  else
-    console.log item
+    alert.fetchItem(function(err, item){}
+      if (err){
+        console.log err
+      } else {
+        console.log item
+      }
+    });
 
 ```
 
@@ -44,10 +47,10 @@ alert.fetchItem (err, item) ->
 
 mongoose-polymorphic is a mongoose plugin. It takes options to set the association and dynamically creates getters and setters.
 
-```coffee
-mongoosePolymorphic = require('mongoose-polymorphic')
+```javscript
+    var mongoosePolymorphic = require('mongoose-polymorphic');
 
-AlertSchema.plugin mongoosePolymorphic, options
+    AlertSchema.plugin(mongoosePolymorphic, options);
 ```
 
 By default this will create schema keys 'itemId' and 'itemType'. It also defines methods 'setItem' and 'fetchItem'.
@@ -55,6 +58,7 @@ By default this will create schema keys 'itemId' and 'itemType'. It also defines
 Options:
 
 * associationKey {String} - define a custom association name (defaults to 'item'). This changes the base name of mappings and methods such as associationKey: 'parent' will create mappings 'parentId' and 'parentType'
+* promise {Object} - provide a promise library to wrap the async fetchItem method. For example {promise: require('bluebird')}
 
 
 
