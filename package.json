@@ -1,6 +1,6 @@
 {
   "name": "mongoose-polymorphic",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "create polymorphic associations in mongoose",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,10 @@
     "associations",
     "polymorphic"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pearlshare/mongoose-polymorphic"
+  },
   "author": "Oliver Brooks",
   "license": "MIT",
   "dependencies": {
